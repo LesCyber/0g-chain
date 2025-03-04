@@ -42,7 +42,7 @@ func pingZgChain(rpcUrl string) error {
 		return err
 	}
 	defer res.Body.Close()
-	if res.StatusCode >= 400 {
+	if res.StatusCode >= http.StatusBadRequest {
 		return fmt.Errorf("ping to status failed: %d", res.StatusCode)
 	}
 	log.Println("successfully started ZgChain!")
@@ -57,7 +57,7 @@ func pingEvm(evmRpcUrl string) error {
 	}
 	defer res.Body.Close()
 	// when running, it should respond 405 to a GET request
-	if res.StatusCode != 405 {
+	if res.StatusCode != http.StatusMethodNotAllowed {
 		return fmt.Errorf("ping to evm failed: %d", res.StatusCode)
 	}
 	log.Println("successfully pinged EVM!")
